@@ -6,10 +6,29 @@ class ViewEtiquetas extends Component{
 		input:''
 	}
 
-	addEtiqueta=()=>{
+
+	componentWillMount() {
+    const db = window.firebase.database();
+    db.ref('etiquetas').on('value', data => {
+    	console.log(data.val());
+      	this.setState({ etiquetas: data.val().etiqueta || [] });
+    });
+  	}
+
+
+
+  	//Push firebase data
+	addEtiqueta=(e)=>{
+		e.preventDefault();
 		var curentState=this.state.etiquetas.slice();
 		curentState.push({name:this.state.input,color:'#000000'});
+		
 		this.setState({etiquetas:curentState});
+		//console.log(this.state.etiquetas);
+		const db = window.firebase.database();
+		db.ref('etiquetas/' ).set({
+      	etiqueta: curentState
+		});
 	}
 
 	handleChange=(e)=>{
@@ -17,7 +36,8 @@ class ViewEtiquetas extends Component{
 	}
 
 	render(){
-		const listEtiquetas=this.state.etiquetas.map((etiqueta)=>
+		const { state } = this;
+		const listEtiquetas=state.etiquetas.map((etiqueta)=>
 			<li>{etiqueta.name}</li>
 			);
 		return (
