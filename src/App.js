@@ -39,7 +39,7 @@ class App extends Component {
             <h2>Labels:</h2>
             <ViewEtiquetas />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 canvas-div">
             <LabelEditor />
           </div>
           <div className="col-md-3">

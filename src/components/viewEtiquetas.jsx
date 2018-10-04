@@ -36,16 +36,16 @@ class ViewEtiquetas extends Component{
 
 	render(){
 		const { state } = this;
-		const listEtiquetas=state.etiquetas.map((etiqueta)=>
-			<li>{etiqueta.name}</li>
+		const listEtiquetas=state.etiquetas.map((etiqueta,i)=>
+			<div><label><input type="radio" name="etiqueta" key={i}/>{etiqueta.name}</label></div>
 			);
 		return (
 			<div>
-			<ul>{listEtiquetas}</ul>
+			<div>{listEtiquetas}</div>
 			<div className="input-group mb-3">
-  				<input type="text" className="form-control"  onChange={this.handleChange} placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+  				<input type="text" className="form-control"  onChange={this.handleChange} placeholder="Name of the label" aria-describedby="basic-addon2"/>
  				 <div className="input-group-append">
-    				<button className="btn btn-outline-secondary" type="button" onClick={this.addEtiqueta}>Button</button>
+    				<button className="btn btn-outline-secondary" type="button" onClick={this.addEtiqueta}>Create</button>
   				</div>
 			</div>
 			</div>
