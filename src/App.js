@@ -9,26 +9,29 @@ class App extends Component {
   constructor(){
     super();
     this.state={
-      files:[]
+      files: [],
+      ready: false
     }
   }
 
 
   onChangeFiles(newFiles){
+    let fileNames=[]
+    for(var i=0; i<newFiles.length;i++){
+      fileNames.push(newFiles[i].name);
+    }
     this.setState({
-      files:newFiles
+      files:fileNames,
+      ready: true
     });
     console.log("Files on App has changed");
   }
 
   render() {
-
+    if (this.state.ready)
     return (
       <div>
         <h1>Label It</h1>
-        <div className="row">
-          <SelectFiles setFiles={this.onChangeFiles.bind(this)} />
-        </div>
         <div className="row">
           <div className="col-md-3">
             <h2>Files:</h2>
@@ -45,6 +48,14 @@ class App extends Component {
           </div>
         </div>
       </div> 
+    );
+  else return(
+    <div>
+      <h1>Label It</h1>
+        <div className="row">
+          <input type="file" onChange={(e)=>this.onChangeFiles(e.target.files)} multiple/>
+        </div>
+    </div>
     );
   }
 }
