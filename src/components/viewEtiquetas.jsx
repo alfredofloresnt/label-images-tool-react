@@ -10,7 +10,6 @@ class ViewEtiquetas extends Component{
 	componentWillMount() {
     const db = window.firebase.database();
     db.ref('etiquetas').on('value', data => {
-    	console.log(data.val());
       	this.setState({ etiquetas: data.val().etiqueta || [] });
     });
   	}

@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 
 class ViewFiles extends Component{
 	state={
-		files:["drectory-one","directory-two"]
+		files:[]
 	}
 	render(){
-		const listFiles=this.state.files.map((file)=>
+		
+		var listFiles= this.props.files.map((file)=>
 			<li>{file}</li>
 			);
+			
+
 		return (
 			<div>
 			<ul>{listFiles}</ul>
