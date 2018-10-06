@@ -6,6 +6,10 @@ class ViewEtiquetas extends Component{
 		input:''
 	}
 
+	constructor(){
+		super();
+	}
+
 
 	componentWillMount() {
     const db = window.firebase.database();
@@ -20,7 +24,8 @@ class ViewEtiquetas extends Component{
 	addEtiqueta=(e)=>{
 		e.preventDefault();
 		var curentState=this.state.etiquetas.slice();
-		curentState.push({name:this.state.input,color:'#000000'});
+		var color="rgba("+Math.random()*255+","+Math.random()*255+","+Math.random()*255+", 0.5)";
+		curentState.push({name:this.state.input,color:color});
 		
 		this.setState({etiquetas:curentState});
 		//console.log(this.state.etiquetas);
@@ -34,10 +39,20 @@ class ViewEtiquetas extends Component{
 		this.setState({input:e.target.value})
 	}
 
+	onEtiquetaChange=(e)=>{
+		var etiqueta={
+			name:e.target.value,
+			color:e.target.getAttribute('color')
+		}
+
+		this.props.selectedEtiqueta(etiqueta);
+		
+	}
+
 	render(){
 		const { state } = this;
 		const listEtiquetas=state.etiquetas.map((etiqueta,i)=>
-			<div><label><input type="radio" name="etiqueta" key={i}/>{etiqueta.name}</label></div>
+			<div><label><input type="radio" name="etiqueta" key={i} onChange={(e)=>this.onEtiquetaChange(e)} color={etiqueta.color} value={etiqueta.name}/>{etiqueta.name}</label></div>
 			);
 		return (
 			<div>

@@ -11,9 +11,11 @@ class App extends Component {
     this.state={
       files: [],
       ready: false,
-      selectedFile: 0
+      selectedFile: 0,
+      selectedEtiqueta: {}
     }
-    this.onSelectedFile = this.onSelectedFile.bind(this)
+    this.onSelectedFile = this.onSelectedFile.bind(this);
+    this.onSelectedEtiqueta = this.onSelectedEtiqueta.bind(this);
   }
 
 
@@ -26,15 +28,21 @@ class App extends Component {
       files:fileNames,
       ready: true
     });
-    //console.log("Files on App has changed");
   }
 
   onSelectedFile(selFile){
     const prev=this.state;
-    console.log(this.state.files[selFile]);
     this.setState({
       selectedFile: selFile
     });
+  }
+
+  onSelectedEtiqueta(selEtiqueta){
+
+    this.setState({
+      selectedEtiqueta: selEtiqueta
+    });
+    console.log(selEtiqueta);
   }
 
   render() {
@@ -47,10 +55,10 @@ class App extends Component {
             <h2>Files:</h2>
             <ViewFiles files={this.state.files} selectedFile={this.onSelectedFile}/>
             <h2>Labels:</h2>
-            <ViewEtiquetas />
+            <ViewEtiquetas selectedEtiqueta={this.onSelectedEtiqueta} />
           </div>
           <div className="col-md-6 canvas-div">
-            <LabelEditor selectedFile={this.state.files[this.state.selectedFile]} />
+            <LabelEditor selectedFile={this.state.files[this.state.selectedFile]} selectedEtiqueta={this.state.selectedEtiqueta}/>
           </div>
           <div className="col-md-3">
             <h2>Stored XML</h2>
