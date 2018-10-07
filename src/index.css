@@ -8,3 +8,13 @@ body {
 .canvas-div{
 	background: white;
 }
+
+#image-view{
+	position:absolute;
+	z-index:1;
+}
+
+#my-canvas{
+	position:relative;
+    z-index:2;
+}

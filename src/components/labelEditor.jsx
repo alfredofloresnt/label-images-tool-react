@@ -13,12 +13,15 @@ class LabelEditor extends Component{
 			xmax:0,
 			ymin:0,
 			ymax:0,
-			color:"rgba(254,0,0,0.5)"
+			color:"rgba(254,0,0,0.5)",
+			imageWidth:0,
+			imageHeight: 0
 		}
 		]
 	}
 	constructor(props){
 		super();
+		this.onLoadImage = this.onLoadImage.bind(this);
 		this.pos1 = {x: 0, y: 0};
 		this.pos2 = {x: 0, y: 0};
 		this.labelx = 0;
@@ -28,10 +31,13 @@ class LabelEditor extends Component{
 		this.ymin = 0;
 		this.xmax = 0;
 		this.ymax = 0;
+		this.imageHeight = 0;
+		this.imageWidth = 0;
 	}
 
 	componentDidMount() {
     	this.updateCanvas();
+
     }
 
 	updateCanvas(){
@@ -42,6 +48,8 @@ class LabelEditor extends Component{
 			ctx.fillStyle = objects[i].color;
 			ctx.fillRect(objects[i].pos1.x,objects[i].pos1.y, objects[i].labelx, objects[i].labely);
 		}
+
+		console.log(objects);
      
 	}
 
@@ -50,9 +58,11 @@ class LabelEditor extends Component{
 		this.pos1 = {x: e.nativeEvent.offsetX,y: e.nativeEvent.offsetY}
 		console.log(this.pos1);
 	}
+
 	dragEnd(e){
 		this.pos2 = {x: e.nativeEvent.offsetX,y: e.nativeEvent.offsetY}
-		
+		console.log(this.pos2);
+
 		//Generate Object
 		this.labelx = this.pos2.x-this.pos1.x;
 		this.labely = this.pos2.y-this.pos1.y;
@@ -80,16 +90,24 @@ class LabelEditor extends Component{
 		this.setState({
 			labelObjects:objects
 		});
-		console.log(this.color);
 		this.updateCanvas();
 	}
+
+	onLoadImage(e){
+		this.setState({
+			imageHeight : e.target.offsetHeight,
+			imageWidth : e.target.offsetWidth
+		});
+		this.updateCanvas();
+	}
+
 
 
 	render(){
 		return(
 		<div>
-			<img id="image-view" src={"img/"+this.props.selectedFile} width='200'/>	
-			<canvas ref="canvas" onMouseDown={(e)=>this.dragStart(e)} onMouseUp={(e)=>this.dragEnd(e)} />
+			<img id="image-view" src={"img/"+this.props.selectedFile} width='200' height='auto' ref="image" onLoad={(e)=>this.onLoadImage(e)}/>	
+			<canvas id='my-canvas' ref="canvas" onMouseDown={(e)=>this.dragStart(e)} onMouseUp={(e)=>this.dragEnd(e)} width={this.state.imageWidth} height={this.state.imageHeight} />
 		</div>
 			);
 	}
